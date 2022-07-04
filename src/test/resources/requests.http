@@ -1,0 +1,48 @@
+GET http://localhost:8080/api/users
+Accept: application/json
+
+> {%
+client.test("Unauthorized", function() {
+  client.assert(response.status === 403, "Response status is not 403");
+});
+%}
+
+### TODO:
+
+POST http://localhost:8080/api/users/register
+Content-Type: application/json
+
+{
+  "name": "vasya",
+  "username": "vasya",
+  "password": "secret"
+}
+
+> {%
+client.test("OK", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+###
+
+GET http://localhost:8080/api/users
+X-Token: 60b420bb3851d9d47acb933dbe70399bf6c92da33af01d4fb770e98c0325f41d3ebaf8986da712c82bcd4d554bf0b54023c29b624de9ef9c2f931efc580f9afb
+Accept: application/json
+
+> {%
+client.test("OK", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+###
+
+GET http://localhost:8080/api/users
+Accept: application/json
+
+> {%
+client.test("OK", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
